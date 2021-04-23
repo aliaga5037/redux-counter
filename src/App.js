@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { increment, decrement } from "./actions/counter";
+import { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    times: 1,
+  };
+
+  changeHandler = (e) => {
+    this.setState({ times: e.target.value });
+  };
+  render() {
+    const { store } = this.props;
+    return (
+      <div className="App">
+        <input
+          type="text"
+          value={this.state.times}
+          onChange={this.changeHandler}
+        />
+        <button onClick={() => store.dispatch(increment(this.state.times))}>
+          Increment
+        </button>
+        <h1>{store.getState().counter}</h1>
+        <button onClick={() => store.dispatch(decrement(this.state.times))}>
+          Decrement
+        </button>
+      </div>
+    );
+  }
 }
 
 export default App;
